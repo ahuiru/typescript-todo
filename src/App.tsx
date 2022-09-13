@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import { ulid } from 'ulid';
 
 function App() {
   const [inputValue, setInputValue] = useState("");
@@ -7,7 +8,7 @@ function App() {
 
   type Todo = {
     inputValue: string;
-    id: number;
+    id: string;
     checked: boolean;
   };
 
@@ -22,14 +23,14 @@ function App() {
     //新しいTODOの作成
     const newTodo: Todo = {
       inputValue: inputValue,
-      id: todos.length,
+      id: ulid(),
       checked: false,
     }
     setTodos([newTodo, ...todos]);
     setInputValue("");
   };
 
-  const handleEdit = (id: number, inputValue: string) => {
+  const handleEdit = (id: string, inputValue: string) => {
     const newTodos = todos.map((todo) => {
       if(todo.id === id) {
         todo.inputValue = inputValue;
@@ -39,7 +40,7 @@ function App() {
     setTodos(newTodos);
   }
 
-  const handleChecked = (id: number, checked: boolean) => {
+  const handleChecked = (id: string, checked: boolean) => {
     const newTodos = todos.map((todo) => {
       if (todo.id === id) {
         todo.checked = !checked;
@@ -49,7 +50,7 @@ function App() {
     setTodos(newTodos);
   }
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     const newTodos = todos.filter((todo) => todo.id !== id);
     setTodos(newTodos);
   }
